@@ -2,6 +2,8 @@
 
 # 快捷键配置
 sxhkd &
+# 输入法
+fcitx5 &
 # 混成器
 picom -b &
 # 随机壁纸
@@ -13,7 +15,7 @@ utools &
 # 邮箱
 mailspring &
 # 钉钉
-bash /opt/apps/com.alibabainc.dingtalk/files/Elevator.sh &
+dingtalk &
 # 微信
 # wine "/home/mxlei/.wine/drive_c/Program Files (x85)/Tencent/WeChat/WeChat.exe" &
 
