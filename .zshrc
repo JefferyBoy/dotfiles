@@ -132,7 +132,7 @@ export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
 # 别名 
 alias ll="ls -lh"
-alias la="ls -a"
+alias la="ls -lha"
 alias df="df -h"
 alias du="du -h"
 alias ..="cd .."
