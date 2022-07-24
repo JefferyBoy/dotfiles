@@ -38,14 +38,15 @@ if [ $monitorCount -gt 2 ];
     bspc monitor DVI-D-0 -n right
     bspc monitor center -d 1 2 3 4 5
     # bspc monitor right -d 4 5 6
+  else
+    bspc monitor -d 1 2 3 4 5
 fi
-bspc monitor -d 1 2 3 4 5
 # 状态栏
 bash ~/.config/polybar/launch.sh --material
 
 # 特定程序窗口的设置
 # 可以命令查看窗口的名称 xprop | grep WM_CLASS 后点击窗口即可
-bspc rule -a vlc state=floating
+# bspc rule -a vlc state=floating
 bspc rule -a Sxiv state=floating
 bspc rule -a feh state=floating
 bspc rule -a mplayer2 state=floating
@@ -60,8 +61,10 @@ bspc rule -a mailspring desktop='^4'
 bspc rule -a Mailspring desktop='^4'
 bspc rule -a netease-cloud-music state=floating
 # 计算器
-bspc rule -a Gnome-calculator state=floating
+bspc rule -a gnome-calculator state=floating
 # 日历
 bspc rule -a Gnome-calendar state=floating
 # 百度网盘
 bspc rule -a baidunetdisk state=floating
+bspc rule -a utools state=floating
+bspc rule -a Utools state=floating

@@ -116,31 +116,4 @@ fi
 
 # 命令自动补全incr
 source ~/.oh-my-zsh/plugins/incr/incr*.zsh
-# 环境变量
-export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-export PUB_HOSTED_URL=https://pub.flutter-io.cn
-export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
-export CHROME_EXECUTABLE=/usr/bin/google-chrome-stable
-export MYVIMRC=/home/mxlei/.vimrc
-# less分页显示彩色
-export LESS_TERMCAP_mb=$'\e[1;32m'
-export LESS_TERMCAP_md=$'\e[1;32m'
-export LESS_TERMCAP_me=$'\e[0m'
-export LESS_TERMCAP_se=$'\e[0m'
-export LESS_TERMCAP_so=$'\e[01;33m'
-export LESS_TERMCAP_ue=$'\e[0m'
-export LESS_TERMCAP_us=$'\e[1;4;31m'
-# 别名 
-alias ll="ls -lh"
-alias la="ls -lha"
-alias df="df -h"
-alias du="du -h"
-alias ..="cd .."
-alias ...="cd ../.."
-alias lst="ls -lht | head"
-alias v=nvim
-alias vim=nvim
-alias n=neofetch
-# ranger自动打开上次浏览的目录
-alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd $LASTDIR'
-source "$HOME/.cargo/env"
+source ~/.bash_profile

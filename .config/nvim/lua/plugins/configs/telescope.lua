@@ -4,6 +4,10 @@ if not present then
    return
 end
 
+vim.g.theme_switcher_loaded = true
+
+require("base46").load_highlight "telescope"
+
 local options = {
    defaults = {
       vimgrep_arguments = {
@@ -43,14 +47,18 @@ local options = {
       border = {},
       borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
       color_devicons = true,
-      use_less = true,
       set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
       file_previewer = require("telescope.previewers").vim_buffer_cat.new,
       grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
       qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
       -- Developer configurations: Not meant for general override
       buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
+      mappings = {
+         n = { ["q"] = require("telescope.actions").close },
+      },
    },
+
+   extensions_list = { "themes", "terms" },
 }
 
 -- check for any override
@@ -58,10 +66,8 @@ options = require("core.utils").load_override(options, "nvim-telescope/telescope
 telescope.setup(options)
 
 -- load extensions
-local extensions = { "themes", "terms" }
-
 pcall(function()
-   for _, ext in ipairs(extensions) do
+   for _, ext in ipairs(options.extensions_list) do
       telescope.load_extension(ext)
    end
 end)

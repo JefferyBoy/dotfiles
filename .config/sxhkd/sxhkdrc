@@ -10,12 +10,15 @@ super + @space
 # 重启sxhdk自身
 super + Escape
 	pkill -USR1 -x sxhkd
+# 随机状态栏主题
+# super + ctrl + space
+#    bash ~/.config/polybar/launch.sh --random
 # 浏览器
 super + c
     google-chrome-stable
 # 随机壁纸
 super + b
-    feh --bg-fill --randomize --recursive ~/.local/share/backgrounds
+    feh --bg-fill --randomize --recursive ~/.local/share/backgrounds/
 # 截图
 ctrl + alt + a
     flameshot gui -c -p /home/mxlei/Pictures/Screenshots
@@ -29,8 +32,12 @@ super + e
 super + shift + e
     nautilus
 # 设置
-super + shift + s
+super + alt + s
     gnome-control-center
+# 网易云音乐
+super + ctrl + m
+    netease-cloud-music
+
 
 #######################################################################
 # bspwm hotkeys
@@ -49,12 +56,12 @@ super + m
 	bspc desktop -l next
 
 # send the newest marked node to the newest preselected node
-super + y
-	bspc node newest.marked.local -n newest.!automatic.local
+# super + y
+#	bspc node newest.marked.local -n newest.!automatic.local
 
 # swap the current node and the biggest window
-super + g
-	bspc node -s biggest.window
+# super + g
+#	bspc node -s biggest.window
 
 #
 # state/flags
@@ -65,8 +72,8 @@ super + {t,shift + t,s,f}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
-super + ctrl + {m,x,y,z}
-	bspc node -g {marked,locked,sticky,private}
+# super + ctrl + {m,x,y,z}
+#	bspc node -g {marked,locked,sticky,private}
 
 #
 # focus/swap
@@ -77,20 +84,20 @@ super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
 # focus the node for the given path jump
-super + {p,b,comma,period}
-	bspc node -f @{parent,brother,first,second}
+# super + {p,b,comma,period}
+#	bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous window in the current desktop
-super + {_,shift + }c
-	bspc node -f {next,prev}.local.!hidden.window
+# super + {_,shift + }c
+# 	bspc node -f {next,prev}.local.!hidden.window
 
 # focus the next/previous desktop in the current monitor
-super + bracket{left,right}
-	bspc desktop -f {prev,next}.local
+# super + bracket{left,right}
+#	bspc desktop -f {prev,next}.local
 
 # focus the last node/desktop
-super + {grave,Tab}
-	bspc {node,desktop} -f last
+# super + {grave,Tab}
+#	bspc {node,desktop} -f last
 
 # focus the older or newer node in the focus history
 super + {o,i}

@@ -4,6 +4,8 @@ if not present then
    return
 end
 
+require "base46.term"
+
 local options = {
    terminals = {
       list = {},
@@ -23,17 +25,6 @@ local options = {
    behavior = {
       close_on_exit = true,
       auto_insert = true,
-   },
-   mappings = {
-      toggle = {
-         float = "<A-i>",
-         horizontal = "<A-h>",
-         vertical = "<A-v>",
-      },
-      new = {
-         horizontal = "<leader>h",
-         vertical = "<leader>v",
-      },
    },
    enable_new_mappings = true,
 }

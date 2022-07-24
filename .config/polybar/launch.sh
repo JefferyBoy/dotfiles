@@ -61,6 +61,11 @@ elif [[ "$1" == "--forest" ]]; then
 	style="forest"
 	launch_bar
 
+elif [[ "$1" == "--random" ]]; then
+  styles=(colorblocks docky grayblocks shades shapes blocks cuts forest hack materia)
+  idx=`expr $RANDOM % ${#styles[*]}`
+  style=${styles[idx]}
+  launch_bar
 else
 	cat <<- EOF
 	Usage : launch.sh --theme
