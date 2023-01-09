@@ -9,4 +9,9 @@ M.ui = {
    theme = "gruvchad",
 }
 
+M.options.user = function ()
+  vim.opt.relativenumber = true
+  vim.opt.cursorcolumn = true
+end
+
 return M

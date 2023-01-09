@@ -1,0 +1,45 @@
+# Apply gtk theming
+exec_always ~/.config/sway/scripts/import-gsettings
+
+output "*" bg ~/.local/share/backgrounds/85305.jpg fill
+
+# Gaps
+gaps inner 4
+gaps outer 0
+
+# Borders
+default_border pixel 2
+default_floating_border none
+hide_edge_borders --i3 none
+
+smart_borders off
+smart_gaps on
+
+# Default Font
+font pango:Noto Sans Regular 10
+
+# Title format for windows
+for_window [shell="xdg_shell"] title_format "%title (%app_id)"
+for_window [shell="x_wayland"] title_format "%class - %title"
+
+## Window decoration
+# class                 border  backgr. text    indicator child_border
+client.focused          #88c0d0 #434c5e #eceff4 #8fbcbb   #88c0d0
+client.focused_inactive #88c0d0 #2e3440 #d8dee9 #4c566a   #4c566a
+client.unfocused        #88c0d0 #2e3440 #d8dee9 #4c566a   #4c566a
+client.urgent           #ebcb8b #ebcb8b #2e3440 #8fbcbb   #ebcb8b
+
+# Window borders
+client.focused          #5C8286 #5C8286 #ffffff #2e9ef4   #8fbcbb
+client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+client.unfocused        #333333 #222222 #888888 #333845   #333845
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #333845
+client.background       #ffffff
+#
+# Status Bar:
+#
+# Read `man 5 sway-bar` for more information about this section.
+bar {
+   swaybar_command waybar
+}

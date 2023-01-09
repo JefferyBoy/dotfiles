@@ -18,7 +18,7 @@ super + c
     google-chrome-stable
 # 随机壁纸
 super + b
-    feh --bg-fill --randomize --recursive ~/.local/share/backgrounds/
+    feh --bg-fill --randomize --recursive /home/mxlei/Pictures/bing_wallpapers/
 # 截图
 ctrl + alt + a
     flameshot gui -c -p /home/mxlei/Pictures/Screenshots

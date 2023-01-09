@@ -117,3 +117,4 @@ fi
 # 命令自动补全incr
 source ~/.oh-my-zsh/plugins/incr/incr*.zsh
 source ~/.bash_profile
+source /opt/ros/melodic/setup.zsh
