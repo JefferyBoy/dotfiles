@@ -9,9 +9,12 @@ M.ui = {
    theme = "gruvchad",
 }
 
-M.options.user = function ()
-  vim.opt.relativenumber = true
-  vim.opt.cursorcolumn = true
-end
+M.general  = {
+  v = {
+    -- TODO 复制到剪贴板有问题
+    ["Y"] = { ""*y", "copy to clipboard" },
+    ["P"] = { ""*p", "paste form clipboard" },
+  }
+}
 
 return M

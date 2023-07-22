@@ -4,6 +4,15 @@
 # 终端模拟器
 super + Return
 	alacritty -e zsh
+  # terminator -e zsh
+  # konsole
+  # kitty
+	#alacritty -e zsh
+super + n
+	alacritty -e zsh
+  # terminator -e zsh
+  # kitty
+	# alacritty -e zsh
 # 程序启动器
 super + @space
 	rofi -show drun
@@ -15,7 +24,7 @@ super + Escape
 #    bash ~/.config/polybar/launch.sh --random
 # 浏览器
 super + c
-    google-chrome-stable
+    google-chrome
 # 随机壁纸
 super + b
     feh --bg-fill --randomize --recursive /home/mxlei/Pictures/bing_wallpapers/
@@ -27,16 +36,22 @@ super + ctrl + {s,shift+s}
     {screenkey,killall screenkey}
 # ranger文件管理器
 super + e
-    alacritty -e ranger
-# nautilus文件管理器
+  alacritty -e ranger
+  # terminator -e ranger
+  # kitty -e ranger
+  #alacritty -e ranger
+# 文件管理器 nautilus dolphin
 super + shift + e
-    nautilus
+    dolphin
 # 设置
 super + alt + s
     gnome-control-center
 # 网易云音乐
 super + ctrl + m
     netease-cloud-music
+# 锁屏
+super + shift ctrl + l 
+    i3lock-fancy
 
 
 #######################################################################
