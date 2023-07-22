@@ -1,83 +1,122 @@
 #! /bin/sh
 
-# 快捷键配置
-sxhkd &
-# 输入法
-fcitx5 &
-# 混成器
-picom -b &
-# 随机壁纸
-bash /home/mxlei/.local/bin/shell/random-background.sh &
-# 消息通知
-dunst &
-# utools
-utools &
-# 邮箱
-mailspring &
-# 钉钉
-dingtalk &
-# 微信
-# wine "/home/mxlei/.wine/drive_c/Program Files (x85)/Tencent/WeChat/WeChat.exe" &
+# 自动启动
+autoStart() {
+  # 快捷键配置
+  sxhkd &
+  # 输入法
+  fcitx5 &
+  # 混成器
+  picom -b &
+  # 随机壁纸
+  bash /home/mxlei/bin/random-background.sh &
+  # 消息通知
+  dunst &
+  # utools
+  utools &
+  # 邮箱
+  mailspring &
+  # 钉钉
+  # dingtalk &
+  # 微信
+  # wine "/home/mxlei/.wine/drive_c/Program Files (x85)/Tencent/WeChat/WeChat.exe" &
+}
+
+# 针对不同的电脑环境进行配置，如多显示器
+configForEnvironment() {
+  config_success=0
+  cpu=$(grep "model name" /proc/cpuinfo | cut -d ':' -f 2 | awk 'NR==1{print $0}')
+  # 家里电脑
+  if [ "$cpu" = " AMD Ryzen 7 3700X" ];
+    then
+      config_success=1
+      mainMonitor="HDMI-0"
+      subMonitor="DVI-D-0"
+      xrandr --output $mainMonitor --primary --mode 1920x1080 
+      xrandr --output $subMonitor --right-of $mainMonitor
+      bspc monitor $mainMonitor -n center
+      bspc monitor center -d 1 2 3 4 5
+  fi
+  # 公司电脑
+  if [ "$cpu" = " Intel I5 4125" ];
+    then
+      config_success=1
+      mainMonitor="HDMI-0"
+      subMonitor="DVI-D-0"
+      xrandr --output $mainMonitor --primary --mode 1920x1080 
+      xrandr --output $subMonitor --right-of $mainMonitor
+      bspc monitor $mainMonitor -n center
+      bspc monitor center -d 1 2 3 4 5
+  fi
+  # 笔记本
+  if [ "$cpu" = " AMD Ryzen 7 6800H with Radeon Graphics" ];
+    then
+      echo "deviceType: 6800H"
+      config_success=1
+      mainMonitor="HDMI-A-0"
+      subMonitor="eDP"
+      if [ "$(xrandr --listmonitors | wc -l)" -gt 2  ]; then
+        xrandr --output $subMonitor --brightness 0.6
+        xrandr --output $mainMonitor --above $subMonitor --primary 
+        (sleep 2; xrandr --output $subMonitor --mode 1920x1200) &
+      else 
+        mainMonitor=$subMonitor
+        xrandr --output $mainMonitor --primary  --brightness 0.6
+      fi
+      bspc monitor $mainMonitor -n center
+      bspc monitor center -d 1 2 3 4 5
+  fi
+  # bspc monitor $subMonitor -n right
+  # bspc monitor right -d 4 5 6
+  # xrandr --output DVI-D-0 --off
+  # 未识别的电脑默认配置
+  if [ $config_success -eq 0 ];
+    then
+      mainMonitor=`xrandr --listmonitors | awk 'NR==2{print $4}'`
+      xrandr --output $mainMonitor --mode 1920*1080
+      bspc monitor -d 1 2 3 4 5
+  fi
+}
 
 # bspwm配置项
-bspc config border_width         0
-bspc config window_gap           5
-bspc config normal_border_color  \#0000
-bspc config focused_border_color \#ffb300
-bspc config split_ratio          0.52
-bspc config borderless_monocle   true
-bspc config gapless_monocle      true
-# 多显示器 
-monitorCount=`xrandr --listmonitors | wc -l`
-if [ $monitorCount -gt 2 ]; 
-  then
-    cpu=`cat /proc/cpuinfo | grep "AMD Ryzen 7 3700X"`
-    if [ -z "$cpu"  ];
-    then
-        mainMonitor="HDMI-0"
-        subMonitor="DVI-D-0"
-        xrandr --output $mainMonitor --primary --mode 1920x1080 
-        xrandr --output $subMonitor --right-of $mainMonitor
-        bspc monitor $mainMonitor -n center
-        bspc monitor center -d 1 2 3 4 5
-    else
-        mainMonitor="DVI-D-0"
-        subMonitor="HDMI-A-0"
-        xrandr --output $mainMonitor --primary --mode 1920x1080 
-        xrandr --output $subMonitor --above $mainMonitor
-        bspc monitor $subMonitor -n center
-        bspc monitor center -d 1 2 3 4 5
-    fi
-    # bspc monitor $subMonitor -n right
-    # bspc monitor right -d 4 5 6
-    # xrandr --output DVI-D-0 --off
-  else
-    bspc monitor -d 1 2 3 4 5
-fi
+configBspwm() {
+  bspc config border_width         0
+  bspc config window_gap           5
+  bspc config normal_border_color  \#0000
+  bspc config focused_border_color \#ffb300
+  bspc config split_ratio          0.52
+  bspc config borderless_monocle   true
+  bspc config gapless_monocle      true
+  # 特定程序窗口的设置
+  # 可以命令查看窗口的名称 xprop | grep WM_CLASS 后点击窗口即可
+  # bspc rule -a vlc state=floating
+  bspc rule -a Sxiv state=floating
+  bspc rule -a feh state=floating
+  bspc rule -a mplayer2 state=floating
+  bspc rule -a Kupfer.py focus=on
+  bspc rule -a Screenkey manage=off
+  bspc rule -a Gimp desktop='^5' state=floating follow=on
+  bspc rule -a tim.exe state=tiled desktop='^3'
+  bspc rule -a wechat state=tiled desktop=^3
+  bspc rule -a com.alibabainc.dingtalk state=floating
+  bspc rule -a jetbrains-studio desktop='^2'
+  bspc rule -a mailspring desktop='^4'
+  bspc rule -a Mailspring desktop='^4'
+  bspc rule -a netease-cloud-music state=floating
+  # 计算器
+  bspc rule -a gnome-calculator state=floating
+  # 日历
+  bspc rule -a Gnome-calendar state=floating
+  # 百度网盘
+  bspc rule -a baidunetdisk state=floating
+  bspc rule -a utools state=floating
+  bspc rule -a Utools state=floating
+}
+
+autoStart
+configForEnvironment
+configBspwm
 # 状态栏
+sleep 1
 bash ~/.config/polybar/launch.sh --material
 
-# 特定程序窗口的设置
-# 可以命令查看窗口的名称 xprop | grep WM_CLASS 后点击窗口即可
-# bspc rule -a vlc state=floating
-bspc rule -a Sxiv state=floating
-bspc rule -a feh state=floating
-bspc rule -a mplayer2 state=floating
-bspc rule -a Kupfer.py focus=on
-bspc rule -a Screenkey manage=off
-bspc rule -a Gimp desktop='^5' state=floating follow=on
-bspc rule -a tim.exe state=tiled desktop='^3'
-bspc rule -a wechat state=tiled desktop=^3
-bspc rule -a com.alibabainc.dingtalk state=floating
-bspc rule -a jetbrains-studio desktop='^2'
-bspc rule -a mailspring desktop='^4'
-bspc rule -a Mailspring desktop='^4'
-bspc rule -a netease-cloud-music state=floating
-# 计算器
-bspc rule -a gnome-calculator state=floating
-# 日历
-bspc rule -a Gnome-calendar state=floating
-# 百度网盘
-bspc rule -a baidunetdisk state=floating
-bspc rule -a utools state=floating
-bspc rule -a Utools state=floating
