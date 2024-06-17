@@ -1,199 +1,172 @@
 {
-    "layer": "top",
-    "position": "top",
-    "height": 25,
-    "spacing": 0,  
-
-    "modules-left": ["custom/launcher", "sway/workspaces", "sway/mode", "sway/window"],
-    "modules-center": ["custom/stub", "tray","custom/weather", "clock", "custom/stub"],
-    "modules-right": ["custom/keyboard-layout", "custom/arrowR0", "cpu",  "memory", "temperature",  "custom/arrowL0", "network",  "custom/power"],
-
-    "sway/workspaces": {
+    "layer": "top", // Waybar at top layer
+    "position": "top", // Waybar position (top|bottom|left|right)
+    // "height": 37, // Waybar height (to be removed for auto height)
+    // "width": 1280, // Waybar width
+    // "margin": 10,
+    "spacing": 0, // Gaps between modules (4px)
+    // Choose the order of the modules
+    "modules-left": ["custom/home", "cpu", "memory", "wlr/workspaces", "wlr/taskbar", "hyprland/window" ],
+    "modules-center": ["custom/launcher"],
+    "modules-right": ["network", "backlight", "pulseaudio", "clock", "battery", "custom/power" ],
+    // Modules configuration
+        "wlr/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
-        "current-only": false,
-        "format": "{icon}",
-        "format-icons": {
-	    "1": "",
-	    "2": "",
-	    "3": "﬐",
-	    "4": "",
-	    "5": "",
-	    "default": "",
-        },
+        "active-only": false,
+        "on-click": "activate",
+        //"format": "{icon}",
         "persistent_workspaces": {
             "1": [],
             "2": [],
             "3": [],
             "4": [],
-            "5": []
+            "5": [],
+            "6": [],
+            "7": [],
+            "8": [],
+            "9": [],
+            "10": []
         }
     },
-    "sway/mode": {
-        "format": "<span style=\"italic\">{}</span>"
-    },
 
-    "sway/window": {
-        "icon": false,
-        "format": "{}",
-        "max-length": 50
-    },
+    "wlr/taskbar": {
+         "format": "{icon}",
+         "tooltip": false,
+         "all-outputs": "false",
+        // "icon-size": 40,
+         "icon-theme": "ePapirus",
+         "tooltip-format": "{title}",
+         "on-click": "activate",
+         "on-click-middle": "close",
+         "ignore-list": [
+         "Alacritty",
+         "kitty",
+         "org.wezfurlong.wezterm"
+    ],
 
-    "idle_inhibitor": {
-       "format": "{icon}",
-        "icon-size": 14,
-        "spacing": 5,
-        "deactivated": ""
-    },
+    "app_ids-mapping": {
+      "firefoxdeveloperedition": "firefox-developer-edition"
+    }
+},
 
-    "tray": {
-        "icon-size": 14,
-        "spacing": 5
+    "mpd": {
+        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
+        "format-disconnected": "Disconnected ",
+        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
+        "unknown-tag": "N/A",
+        "interval": 2,
+        "consume-icons": {
+            "on": " "
+        },
+        "random-icons": {
+            "off": "<span color=\"#f53c3c\"></span> ",
+            "on": " "
+        },
+        "repeat-icons": {
+            "on": " "
+        },
+        "single-icons": {
+            "on": "1 "
+        },
+        "state-icons": {
+            "paused": "",
+            "playing": ""
+        },
+        "tooltip-format": "MPD (connected)",
+        "tooltip-format-disconnected": "MPD (disconnected)"
     },
 
     "clock": {
-        "tooltip-format": "{:%A %B %d %Y | %H:%M}",
-        //"format": " {:%a %d %b  %I:%M %p}",	//12 hour format
-        "format": " {:%a %d %b  %H:%M}",	//24 hour format
-        "format-alt": " {:%d/%m/%Y  %H:%M:%S}",
-        //"timezones": [ "" ],
-        //"max-length": 200
-        "interval": 1
+        "tooltip": false,
+        "interval": 1,
+        "format": "{: %Y-%m-%d %H:%M:%S}"
     },
 
     "cpu": {
-        "format": "﬙ {usage}%",
-        "on-click": "alacritty -e htop"
+        "interval": 3,
+        "format": " {usage}%",
+        "tooltip": false,
+        "on-click": "alacritty -e gotop",
     },
 
     "memory": {
-        "format": " {used:0.1f}GB",
-        "on-click": "alacritty -e htop"
-    },
-
-    "temperature": {
-        "thermal-zone": 2,
-        "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-        "critical-threshold": 80,
-        // "format-critical": "{temperatureC}°C ",
-        "format": "{temperatureC}°C "
+        "interval": 3,
+        "tooltip": false,
+        "format": " {}%",
+        "on-click": "alacritty -e htop",
     },
 
     "backlight": {
         // "device": "acpi_video1",
-        "format": "{icon} {percent}%",
-        "format-icons": ["", ""],
-        "on-scroll-down": "brightnessctl -c backlight set 5%",
-        "on-scroll-up": "brightnessctl -c backlight set +5%"
+        "format": "{icon}{percent}%",
+        "tooltip": false,
+        "format-icons": ["󱩎 ", "󱩏 ", "󱩐 ", "󱩑 ", "󱩒 ", "󱩓 ", "󱩔 ", "󱩕 ", "󱩖 ", "󰛨 "],
     },
-
     "battery": {
+        "interval": 1,
         "states": {
-            // "good": 95,
+            "good": 95,
             "warning": 30,
-            "critical": 15
+            "critical": 20,
         },
         "format": "{icon}  {capacity}%",
+        "tooltip": false,
+        "format-charging": "⚡{capacity}%",
+        "format-plugged": "⚡{capacity}%",
+        "format-alt": "{icon}  {time}",
         "format-icons": ["", "", "", "", ""]
     },
-
-     "network": {
-        // "interface": "wlp2s0", // (Optional) To force the use of this interface
-        "format": "⚠ Disabled",
+    "network": {
+        // "interface": "wlp2*", // (Optional) To force the use of this interface
         "format-wifi": " ",
-        "format-ethernet": " {ifname}",
-        "format-disconnected": "⚠ Disconnected",
-        "on-click": "networkmanager_dmenu",
-        "tooltip" : true,
-        "tooltip-format" : "{ifname}\n{ipaddr}",
-        "tooltip-format-wifi" : "{essid} {ifname}\n{ipaddr}\nstrength: {signalStrength}%"
+        "format-ethernet": "",
+        "tooltip-format": "{ifname} via {gwaddr} ",
+        "tooltip": false,
+        "format-linked": "{ifname} (No IP)  ",
+        "format-disconnected": "⚠ Disconnected ",
+        "on-click": "alacritty -e iwctl",
     },
-
     "pulseaudio": {
-        "scroll-step": 5,
-        "format": "{icon} {volume}%",
-        "format-bluetooth": "{icon} {volume}%",
-        "format-muted":"muted ",
+        "scroll-step": 1, // %, can be a float
+        "format": "{format_source} {icon} {volume}%",
+        "format-bluetooth": "{icon} {volume}% {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": "{format_source} ",
+        "format-source": " {volume}%",
+        "format-source-muted": "",
         "format-icons": {
-            "headphones": "",
-            "handsfree": "",
-            "headset": "",
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
             "phone": "",
             "portable": "",
             "car": "",
-            "default": ["", ""]
+            "default": ["", "", ""]
         },
-        "on-click": "pavucontrol"
+        "on-click": "pavucontrol",
+        "on-click-right": "volumectl toggle-mute",
     },
 
-    "custom/stub" : {
-        "format": " {} ",
-        "exec": "echo  \":\""
+    "custom/launcher":{
+        "format": " ",
+        "tooltip": false,
+        "on-click": "bash ~/.config/rofi/scripts/launcher_t3",
+        "on-click-right": "killall rofi"
     },
 
-    "custom/spotify": {
-         "exec": "/usr/bin/python3 ~/.config/waybar/scripts/mediaplayer.py --player spotify",
-         "format": " {} ",
-         "return-type": "json",
-         "on-click": "playerctl play-pause",
-         "on-scroll-up": "playerctl next",
-         "on-scroll-down": "playerctl previous"
-     },
+   "custom/home":{
+       "format": " ",
+        "tooltip": false,
+        "on-click": "alacritty",
+        "on-click": "bash ~/.config/hypr/script/radombg.sh",
+   },
 
-     "custom/launcher": {
-    	 "format":"| {}  ",
-    	 "on-click": "exec rofi -show drun",
-    	 "tooltip": false,
-         "exec" : "echo $USER"
-     },
-
-    "custom/weather": {
-         "format": "{}",
-         "tooltip": true,
-         "interval": 3600,
-         "exec": "$HOME/.config/waybar/scripts/waybar-wttr.py",
-         "return-type": "json"
+   "custom/power":{
+        "tooltip": false,
+        "format": " ",
+        "on-click": "bash ~/.config/rofi/scripts/powermenu_t4",
+        "on-click-right": "killall rofi"
     },
-
-   "custom/pacman": {
-        "format": " {}",
-        "interval": 7200,                     // every two hours
-        "exec": "checkupdates | wc -l",       // # of updates
-        "exec-if": "exit 0",                  // always run; consider advanced run conditions
-        "on-click": "alacritty -e sudo pacman -Syu ; pkill -SIGRTMIN+8 waybar", // update system
-        "signal": 8
-    },
-
-    "custom/power": {
-      	"format":" ⏻ ",
-       	"on-click": "nwg-bar",
-      	"tooltip": false,
-    },
-
-     // to find keyboard identifier use "swaymsg -t get_inputs"
-    "custom/keyboard-layout": {
-         "format": " {}",
-      	"tooltip": false,
-         "exec": "$HOME/.config/waybar/scripts/kblayout.sh",
-        "icon-size": 14,
-         // "exec": "$HOME/.config/waybar/scripts/kblayout.sh '1:1:AT_Translated_Set_2_keyboard'"
-         // "exec": "$HOME/.config/waybar/scripts/kblayout.sh '6700:3620:SEM_USB_Keyboard'"
-     },
-
-     "wlr/taskbar": {
-        "format": "{icon}",
-        "icon-size": 14,
-        "icon-theme": "Numix-Circle",
-        "tooltip-format": "{title}",
-        "on-click": "activate",
-        "on-click-middle": "close"
-      },
-
-     "custom/arrowL0": {
-    	   "format":""
-      },
-
-     "custom/arrowR0": {
-    	   "format":""
-      },
 }
+

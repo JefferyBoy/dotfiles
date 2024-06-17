@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 # 自动启动
 autoStart() {
@@ -15,7 +15,7 @@ autoStart() {
   # utools
   utools &
   # 邮箱
-  mailspring &
+  mailspring --password-store="gnome-libsecret" &
   # 钉钉
   # dingtalk &
   # 微信
@@ -25,6 +25,7 @@ autoStart() {
 # 针对不同的电脑环境进行配置，如多显示器
 configForEnvironment() {
   config_success=0
+  java -version
   cpu=$(grep "model name" /proc/cpuinfo | cut -d ':' -f 2 | awk 'NR==1{print $0}')
   # 家里电脑
   if [ "$cpu" = " AMD Ryzen 7 3700X" ];
@@ -38,13 +39,13 @@ configForEnvironment() {
       bspc monitor center -d 1 2 3 4 5
   fi
   # 公司电脑
-  if [ "$cpu" = " Intel I5 4125" ];
+  if [ "$cpu" = " 11th Gen Intel(R) Core(TM) i7-11700 @ 2.50GHz" ];
     then
       config_success=1
-      mainMonitor="HDMI-0"
-      subMonitor="DVI-D-0"
-      xrandr --output $mainMonitor --primary --mode 1920x1080 
-      xrandr --output $subMonitor --right-of $mainMonitor
+      mainMonitor="HDMI-2"
+      subMonitor="DP-2"
+      xrandr --output $mainMonitor --primary --mode 2560x1440 
+      xrandr --output $subMonitor --left-of $mainMonitor
       bspc monitor $mainMonitor -n center
       bspc monitor center -d 1 2 3 4 5
   fi
@@ -65,6 +66,34 @@ configForEnvironment() {
       fi
       bspc monitor $mainMonitor -n center
       bspc monitor center -d 1 2 3 4 5
+  fi
+  # 无界14x
+  if [ "$cpu" = " AMD Ryzen 7 8845HS w/ Radeon 780M Graphics" ]; then
+    # 屏幕亮度
+    # brightness_file="/sys/class/backlight/amdgpu_bl1/brightness"
+    # if [ -f $brightness_file ]; then
+    #   echo 100 >$brightness_file
+    # fi
+    config_success=1
+    mainMonitor="HDMI-A-0"
+    subMonitor="eDP"
+    subMonitor2="DisplayPort-0"
+    xrandr --output $subMonitor2 --mode 2560x1440
+    if [ "$(xrandr | grep ' connected ' | wc -l)" -eq 3  ]; then
+      xrandr --output $mainMonitor --primary 
+      xrandr --output $subMonitor --below $mainMonitor --brightness 0.6
+      xrandr --output $subMonitor2 --left-of $mainMonitor
+      (sleep 2; xrandr --output $subMonitor --mode 1920x1200) &
+    elif [ "$(xrandr | grep ' connected ' | wc -l)" -eq 2  ]; then 
+      xrandr --output $mainMonitor --primary 
+      xrandr --output $subMonitor --below $mainMonitor --brightness 0.6
+      (sleep 2; xrandr --output $subMonitor --mode 1920x1200) &
+    else 
+      mainMonitor=$subMonitor
+      xrandr --output $mainMonitor --primary --brightness 0.6
+    fi
+    bspc monitor $mainMonitor -n center
+    bspc monitor center -d 1 2 3 4 5
   fi
   # bspc monitor $subMonitor -n right
   # bspc monitor right -d 4 5 6
@@ -99,12 +128,15 @@ configBspwm() {
   bspc rule -a tim.exe state=tiled desktop='^3'
   bspc rule -a wechat state=tiled desktop=^3
   bspc rule -a com.alibabainc.dingtalk state=floating
-  bspc rule -a jetbrains-studio desktop='^2'
+  # bspc rule -a jetbrains-studio desktop='^3'
   bspc rule -a mailspring desktop='^4'
   bspc rule -a Mailspring desktop='^4'
+  # 音乐
   bspc rule -a netease-cloud-music state=floating
+  bspc rule -a listen1 state=floating
   # 计算器
   bspc rule -a gnome-calculator state=floating
+  bspc rule -a cutefish-calculator state=floating
   # 日历
   bspc rule -a Gnome-calendar state=floating
   # 百度网盘
@@ -113,10 +145,20 @@ configBspwm() {
   bspc rule -a Utools state=floating
 }
 
+daka_notify() {
+  now_hour=$(date +%H)
+  if [[ 
+      ($now_hour -gt 7 && $now_hour -lt 10) || 
+      ($now_hour -gt 20 && $now_hour -lt 24)
+    ]]; then
+    zenity --info --text "记得打卡"
+  fi
+}
+
 autoStart
 configForEnvironment
 configBspwm
 # 状态栏
-sleep 1
+sleep 2
 bash ~/.config/polybar/launch.sh --material
 

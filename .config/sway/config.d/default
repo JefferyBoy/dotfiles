@@ -208,5 +208,6 @@ bindsym {
 # Screenshots
 bindsym --to-code  {
    print exec /usr/share/sway/scripts/grimshot --notify save output
-   Ctrl+Alt+a exec ~/.config/sway/scripts/screenshot.sh
+   #Ctrl+Alt+a exec ~/.config/sway/scripts/screenshot.sh
+   CTRL+ALT+a exec, grimblast --notify --cursor copysave area
 }
