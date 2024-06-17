@@ -1,0 +1,2 @@
+polybar|error: Disabling module "wired-network" (reason: Invalid network interface "enp4s0")
+polybar|error: Disabling module "wireless-network" (reason: Invalid network interface "wlo1")
