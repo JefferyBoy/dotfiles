@@ -133,6 +133,7 @@ local plugins = {
 	{
 		"L3MON4D3/LuaSnip",
 		dependencies = { "rafamadriz/friendly-snippets", "nvim-cmp" },
+    build = "make install_jsregexp",
 		config = function(_, opts)
 			if opts then
 				require("luasnip").config.setup(opts)
@@ -270,6 +271,7 @@ require("lazy").setup(plugins)
 require("plugins.fcitx")
 require("plugins.gitbox").setup()
 require("plugins.searcher").setup()
+require("plugins.adbox").setup()
 require("configs.mappings")
 
 -- 设置文件类型检测  
