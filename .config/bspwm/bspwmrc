@@ -159,6 +159,6 @@ autoStart
 configForEnvironment
 configBspwm
 # 状态栏
-sleep 2
+sleep 3
 bash ~/.config/polybar/launch.sh --material
 

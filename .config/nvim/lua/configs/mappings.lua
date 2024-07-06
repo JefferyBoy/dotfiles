@@ -11,6 +11,7 @@ map("n", "Q", "<cmd>q<CR>", ops)
 --键0回到行首非空字符位置
 map("n", "0", "^", ops)
 --系统剪贴板
+map("v", "Y", "\"+y", ops)
 --vmap <leader><leader>y "+y
 --nnoremap <leader><leader>p "+p
 --分屏窗口移动
@@ -44,6 +45,7 @@ map("n", "<leader>ss", "<cmd>SearcheInWord false<CR>", ops)
 map("n", "<leader>sa", "<cmd>SearcheInWord true<CR>", ops)
 map("n", "<leader>sd", "<cmd>UnSearcheInWord<CR>", ops)
 map("n", "<leader>sn", "<cmd>SearcheCurrentBufferToNew<CR>", ops)
+map("n", "<leader>sN", "<cmd>SearcheAllFilesToNew<CR>", ops)
 
 --telescope
 local builtin = require("telescope.builtin")
