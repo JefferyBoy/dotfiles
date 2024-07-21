@@ -78,16 +78,18 @@ configForEnvironment() {
     mainMonitor="HDMI-A-0"
     subMonitor="eDP"
     subMonitor2="DisplayPort-0"
+    xrandr --output $mainMonitor --mode 2560x1440
     xrandr --output $subMonitor2 --mode 2560x1440
+    xrandr --output $subMonitor --mode 1920x1200
     if [ "$(xrandr | grep ' connected ' | wc -l)" -eq 3  ]; then
       xrandr --output $mainMonitor --primary 
       xrandr --output $subMonitor --below $mainMonitor --brightness 0.6
       xrandr --output $subMonitor2 --left-of $mainMonitor
-      (sleep 2; xrandr --output $subMonitor --mode 1920x1200) &
+      #(sleep 2; xrandr --output $subMonitor --mode 1920x1200) &
     elif [ "$(xrandr | grep ' connected ' | wc -l)" -eq 2  ]; then 
       xrandr --output $mainMonitor --primary 
       xrandr --output $subMonitor --below $mainMonitor --brightness 0.6
-      (sleep 2; xrandr --output $subMonitor --mode 1920x1200) &
+      #(sleep 2; xrandr --output $subMonitor --mode 1920x1200) &
     else 
       mainMonitor=$subMonitor
       xrandr --output $mainMonitor --primary --brightness 0.6
@@ -143,6 +145,8 @@ configBspwm() {
   bspc rule -a baidunetdisk state=floating
   bspc rule -a utools state=floating
   bspc rule -a Utools state=floating
+  # 飞书投屏
+  bspc rule -a Metting state=floating
 }
 
 daka_notify() {
@@ -155,9 +159,10 @@ daka_notify() {
   fi
 }
 
-autoStart
 configForEnvironment
 configBspwm
+sleep 1
+autoStart
 # 状态栏
 sleep 3
 bash ~/.config/polybar/launch.sh --material

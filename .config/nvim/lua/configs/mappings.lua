@@ -11,7 +11,7 @@ map("n", "Q", "<cmd>q<CR>", ops)
 --键0回到行首非空字符位置
 map("n", "0", "^", ops)
 --系统剪贴板
-map("v", "Y", "\"+y", ops)
+map("v", "Y", '"+y', ops)
 --vmap <leader><leader>y "+y
 --nnoremap <leader><leader>p "+p
 --分屏窗口移动
@@ -59,6 +59,7 @@ map("n", "<f1>", builtin.commands, ops)
 map("n", "<f2>", builtin.keymaps, ops)
 map("n", "<f12>", builtin.lsp_document_symbols, ops)
 map("n", "<C-e>", builtin.oldfiles, ops)
+map("n", ":", "<cmd>Telescope cmdline<CR>", ops)
 
 --nvimtree
 map("n", "<C-n>", "<cmd> NvimTreeToggle <CR>", ops)
@@ -149,7 +150,7 @@ map("n", "{", "<cmd>AerialPrev<CR>", { buffer = 0 })
 map("n", "}", "<cmd>AerialNext<CR>", { buffer = 0 })
 map("n", "<C-m>", "<cmd>AerialToggle! right<CR>")
 map("n", "<CR>", "<cmd>AerialNext<CR>", { buffer = 0 })
-vim.keymap.del('n', "<CR>")
+vim.keymap.del("n", "<CR>")
 
 -- 任务管理obverseer
 map("n", "<F8>", "<CMD>OverseerToggle<CR>")
@@ -158,3 +159,7 @@ map("n", "<F6>", "<CMD>OverseerRunCmd<CR>")
 
 -- nvim-jdtls
 map("n", "<C-A-o>", require("jdtls").organize_imports)
+
+--flash.nvim跳转
+map({ "n", "x", "o" }, "s", require("flash").jump, { desc = "Flash.nvim" })
+map({ "n", "x", "o" }, "S", require("flash").treesitter, { desc = "Flash.nvim" })
