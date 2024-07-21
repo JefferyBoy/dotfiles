@@ -23,8 +23,14 @@ local plugins = {
 	{
 		"nvim-telescope/telescope.nvim",
 		tag = "0.1.6",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		config = function()
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"jonarrien/telescope-cmdline.nvim",
+		},
+		keys = {
+			{ ":", "<cmd>Telescope cmdline<cr>", desc = "Cmdline" },
+		},
+		config = function(_, opts)
 			require("configs/telescope")
 		end,
 	},
@@ -133,7 +139,7 @@ local plugins = {
 	{
 		"L3MON4D3/LuaSnip",
 		dependencies = { "rafamadriz/friendly-snippets", "nvim-cmp" },
-    build = "make install_jsregexp",
+		build = "make install_jsregexp",
 		config = function(_, opts)
 			if opts then
 				require("luasnip").config.setup(opts)
@@ -263,8 +269,26 @@ local plugins = {
 			})
 		end,
 	},
-  -- nvim-jdtls
-  "mfussenegger/nvim-jdtls",
+	-- nvim-jdtls
+	"mfussenegger/nvim-jdtls",
+	-- 光标跳转
+	{
+		"folke/flash.nvim",
+		event = "VeryLazy",
+		opts = {},
+	},
+	-- cmdline增加UI、代码提示
+	-- 图片显示
+	-- {
+	-- 	"3rd/image.nvim",
+	-- },
+	--
+	{
+		"luozhiya/fittencode.nvim",
+		config = function()
+			require("fittencode").setup()
+		end,
+	},
 }
 
 require("lazy").setup(plugins)
@@ -274,7 +298,9 @@ require("plugins.searcher").setup()
 require("plugins.adbox").setup()
 require("configs.mappings")
 
--- 设置文件类型检测  
+vim.cmd([[runtime plugins/fittencode.vim]])
+
+-- 设置文件类型检测
 vim.cmd([[  
   au BufRead,BufNewFile *.log set filetype=android_log  
 ]])
