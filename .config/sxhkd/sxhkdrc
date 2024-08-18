@@ -1,21 +1,14 @@
-#######################################################################
-# wm independent hotkeys
-#######################################################################
 # 终端模拟器
 super + Return
-	alacritty -e zsh
+  alacritty -e nvim --cmd 'terminal zsh'
+	# alacritty -e zsh
   # terminator -e zsh
   # konsole
   # kitty
 	#alacritty -e zsh
-super + n
-	alacritty -e zsh
-  # terminator -e zsh
-  # kitty
-	# alacritty -e zsh
 # 程序启动器
 super + @space
-	rofi -show drun
+	$HOME/bin/rofi -show drun
 # 重启sxhdk自身
 super + Escape
 	pkill -USR1 -x sxhkd
@@ -28,6 +21,8 @@ super + c
 # 随机壁纸
 super + b
     feh --bg-fill --randomize --recursive /home/mxlei/Pictures/bing_wallpapers/
+super + p
+    feh --bg-fill --randomize --recursive /home/mxlei/Pictures/home_wallpapers/
 # 截图
 ctrl + alt + a
     flameshot gui -c -p /home/mxlei/Pictures/Screenshots
@@ -43,20 +38,25 @@ super + e
 # 文件管理器 nautilus dolphin
 super + shift + e
     dolphin
-# 设置
-super + alt + s
-    gnome-control-center
+# 任务
+super + r
+    alacritty -e htop
 # 网易云音乐
 super + ctrl + m
     netease-cloud-music
-# 锁屏
-super + shift ctrl + l 
-    i3lock-fancy
+# 锁屏、关机
+super + alt + p 
+#   i3lock-fancy
+    bash ~/.config/rofi/applets/bin/powermenu.sh
+# neovim
+super + n
+    alacritty -e nvim --cmd 'cd /media/mxlei/data/notebook/'
+# neovim终端模式，方便查看连续的命令输出，ctrl+\后ctrl+n切换到vim模式,i切换到终端模式
+super + N
+	  alacritty -e zsh
 
 
-#######################################################################
-# bspwm hotkeys
-#######################################################################
+# bspwm快捷键
 
 # 退出、重启bspwm
 super + alt + {q,r}
@@ -129,20 +129,20 @@ super + {_,shift + }{1-9,0}
 #
 
 # preselect the direction
-super + ctrl + {h,j,k,l}
-	bspc node -p {west,south,north,east}
+# super + ctrl + {h,j,k,l}
+#  bspc node -p {west,south,north,east}
 
 # preselect the ratio
-super + ctrl + {1-9}
-	bspc node -o 0.{1-9}
-
-# cancel the preselection for the focused node
-super + ctrl + space
-	bspc node -p cancel
-
-# cancel the preselection for the focused desktop
-super + ctrl + shift + space
-	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+# super + ctrl + {1-9}
+# 	bspc node -o 0.{1-9}
+# 
+# # cancel the preselection for the focused node
+# super + ctrl + space
+# 	bspc node -p cancel
+# 
+# # cancel the preselection for the focused desktop
+# super + ctrl + shift + space
+# 	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
 #
 # move/resize
@@ -150,12 +150,12 @@ super + ctrl + shift + space
 
 # expand a window by moving one of its side outward
 super + alt + {h,j,k,l}
-	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+	bspc node -z {left -40 0,bottom 0 40,top 0 -40,right 40 0}
 
 # contract a window by moving one of its side inward
 super + alt + shift + {h,j,k,l}
-	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+	bspc node -z {right -40 0,top 0 40,bottom 0 -40,left 40 0}
 
 # move a floating window
 super + {Left,Down,Up,Right}
-	bspc node -v {-20 0,0 20,0 -20,20 0}
+	bspc node -v {-40 0,0 40,0 -40,40 0}

@@ -9,7 +9,7 @@ autoStart() {
   # 混成器
   picom -b &
   # 随机壁纸
-  bash /home/mxlei/bin/random-background.sh &
+  feh --bg-fill --randomize --recursive /home/mxlei/Pictures/bing_wallpapers/ &
   # 消息通知
   dunst &
   # utools
@@ -20,6 +20,7 @@ autoStart() {
   # dingtalk &
   # 微信
   # wine "/home/mxlei/.wine/drive_c/Program Files (x85)/Tencent/WeChat/WeChat.exe" &
+  /home/mxlei/bin/PicGo-2.4.0.AppImage &
 }
 
 # 针对不同的电脑环境进行配置，如多显示器
@@ -92,6 +93,7 @@ configForEnvironment() {
       #(sleep 2; xrandr --output $subMonitor --mode 1920x1200) &
     else 
       mainMonitor=$subMonitor
+    xrandr --output $subMonitor --mode 1920x1200
       xrandr --output $mainMonitor --primary --brightness 0.6
     fi
     bspc monitor $mainMonitor -n center
@@ -136,6 +138,7 @@ configBspwm() {
   # 音乐
   bspc rule -a netease-cloud-music state=floating
   bspc rule -a listen1 state=floating
+  bspc rule -a qqmusic state=floating
   # 计算器
   bspc rule -a gnome-calculator state=floating
   bspc rule -a cutefish-calculator state=floating
@@ -147,6 +150,9 @@ configBspwm() {
   bspc rule -a Utools state=floating
   # 飞书投屏
   bspc rule -a Metting state=floating
+  bspc rule -a qv2ray state=floating
+  # 提示框
+  bspc rule -a zenity state=floating
 }
 
 daka_notify() {
