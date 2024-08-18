@@ -95,7 +95,7 @@ function M.search_in_word(append)
 		text = vim.fn.eval("@/") .. "\\|" .. text
 	end
 	vim.cmd('let @/ = "' .. vim.fn.escape(text, "\\/") .. '"')
-	vim.cmd("normal! n<CR>")
+	vim.cmd("normal! nN<CR>")
 end
 
 function M.unsearch_in_word()
@@ -153,8 +153,13 @@ end
 function M.search_all_file_to_new()
 	local dir = vim.fn.getcwd()
 	local pattern = vim.fn.eval("@/")
+  local cmd = ''
 	pattern = string.gsub(pattern, "\\", "")
-	local cmd = 'rg -i "' .. pattern .. '" "' .. dir .. '" | cut -d : -f 2- | sort'
+  if vim.fn.executable("rg") then
+	  cmd = 'rg -ai "' .. pattern .. '" "' .. dir .. '" | cut -d : -f 2- | sort'
+  else
+    cmd = 'grep -ari "' .. pattern .. '" "' .. dir .. '" | cut -d : -f 2- | sort'
+  end
 	run_cmd_and_show_result(cmd, "SearchAll: " .. pattern)
 end
 

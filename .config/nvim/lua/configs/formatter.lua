@@ -41,5 +41,3 @@ require("formatter").setup {
     zsh = require("formatter.filetypes.yaml").yamlfmt,
   }
 }
-
-print("format")

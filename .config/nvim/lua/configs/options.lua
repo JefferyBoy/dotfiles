@@ -1,6 +1,9 @@
 local opt = vim.opt
 local g = vim.g
 
+-- 超级键
+g.mapleader = " "
+
 opt.laststatus = 3
 opt.showmode = false
 -- 系统剪贴板
@@ -27,6 +30,5 @@ opt.numberwidth = 2
 opt.relativenumber = true
 opt.ruler = true
 
--- 老板键
-g.mapleader = " "
-
+-- Neovim default updatetime is 4000
+vim.opt.updatetime = 200

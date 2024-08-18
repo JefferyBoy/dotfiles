@@ -275,30 +275,83 @@ local plugins = {
 	{
 		"folke/flash.nvim",
 		event = "VeryLazy",
+		config = function()
+			require("flash").setup({
+				modes = {
+					char = {
+						enabled = false,
+					},
+				},
+			})
+		end,
 		opts = {},
 	},
-	-- cmdline增加UI、代码提示
-	-- 图片显示
+	-- markdown图片显示
 	-- {
 	-- 	"3rd/image.nvim",
 	-- },
 	--
+	-- markdown预览
+	{
+		"iamcco/markdown-preview.nvim",
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		build = "cd app && npm install",
+		init = function()
+			vim.g.mkdp_filetypes = { "markdown" }
+		end,
+		ft = { "markdown" },
+	},
+	-- 代码提示
 	{
 		"luozhiya/fittencode.nvim",
+		opts = {},
+	},
+	-- 启动页
+	-- {
+	-- 	"nvimdev/dashboard-nvim",
+	-- 	event = "VimEnter",
+	-- 	config = function()
+	-- 		require("dashboard").setup({
+	-- 			theme = "hyper",
+	-- 		})
+	-- 	end,
+	-- 	dependencies = { { "nvim-tree/nvim-web-devicons" } },
+	-- },
+	-- 启动页
+	{
+		"goolord/alpha-nvim",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+			"nvim-lua/plenary.nvim",
+		},
 		config = function()
-			require("fittencode").setup()
+			require("alpha").setup(require("alpha.themes.startify").config)
+		end,
+	},
+	{
+		"ahmedkhalf/project.nvim",
+		config = function()
+			require("project_nvim").setup({
+				manual_mode = false,
+				detection_methods = { "lsp", "pattern" },
+				patterns = { ".git", "Makefile", "package.json", "CMakeLists.txt", "Android.bp", "Android.mk" },
+				ignore_lsp = {},
+				exclude_dirs = {},
+				show_hidden = false,
+				silent_chdir = true,
+				scope_chdir = "global",
+				datapath = vim.fn.stdpath("data"),
+			})
+      require('telescope').load_extension('projects')
 		end,
 	},
 }
-
 require("lazy").setup(plugins)
 require("plugins.fcitx")
 require("plugins.gitbox").setup()
 require("plugins.searcher").setup()
 require("plugins.adbox").setup()
 require("configs.mappings")
-
-vim.cmd([[runtime plugins/fittencode.vim]])
 
 -- 设置文件类型检测
 vim.cmd([[  

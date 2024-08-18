@@ -1,5 +1,7 @@
 local map = vim.keymap.set
 local ops = { noremap = true, silent = true }
+-- 重新加载配置文件
+map("n", "<leader>rl", "<cmd>source ~/.config/nvim/init.lua<CR>", ops)
 -- 窗口调整
 map("n", "<C-up>", "<cmd>resize +5<CR>", ops)
 map("n", "<C-down>", "<cmd>resize -5<CR>", ops)
@@ -41,22 +43,24 @@ map("n", "<ESC>", "<cmd>noh<CR>", ops)
 map("n", "<leader>zz", "<cmd>set foldmethod=indent<CR>", ops)
 map("n", "<leader>zm", "<cmd>set foldmethod=manual<CR>", ops)
 --快速搜索
-map("n", "<leader>ss", "<cmd>SearcheInWord false<CR>", ops)
-map("n", "<leader>sa", "<cmd>SearcheInWord true<CR>", ops)
-map("n", "<leader>sd", "<cmd>UnSearcheInWord<CR>", ops)
-map("n", "<leader>sn", "<cmd>SearcheCurrentBufferToNew<CR>", ops)
-map("n", "<leader>sN", "<cmd>SearcheAllFilesToNew<CR>", ops)
+map("n", "ss", "<cmd>SearcheInWord false<CR>", ops)
+map("n", "sa", "<cmd>SearcheInWord true<CR>", ops)
+map("n", "sd", "<cmd>UnSearcheInWord<CR>", ops)
+map("n", "sn", "<cmd>SearcheCurrentBufferToNew<CR>", ops)
+map("n", "sN", "<cmd>SearcheAllFilesToNew<CR>", ops)
 
 --telescope
 local builtin = require("telescope.builtin")
 map("n", "<leader>ff", builtin.find_files, ops)
 map("n", "<leader>fw", builtin.live_grep, ops)
-map("n", "<leader>fb", builtin.buffers, ops)
 map("n", "<leader>fh", builtin.help_tags, ops)
+map("n", "<leader>fb", builtin.buffers, ops)
+map("n", "<leader>ft", "<cmd>Telescope colorscheme<CR>", ops)
+map("n", "<leader>fp", "<cmd>Telescope projects<CR>", ops)
 map("n", "<leader>m", builtin.marks, ops)
-map("n", "<leader>th", "<cmd>Telescope colorscheme<CR>", ops)
 map("n", "<f1>", builtin.commands, ops)
 map("n", "<f2>", builtin.keymaps, ops)
+map("n", "<f11>", builtin.buffers, ops)
 map("n", "<f12>", builtin.lsp_document_symbols, ops)
 map("n", "<C-e>", builtin.oldfiles, ops)
 map("n", ":", "<cmd>Telescope cmdline<CR>", ops)
@@ -142,8 +146,14 @@ map("n", "<leader>b", dap.toggle_breakpoint, ops)
 map("n", "<leader>td", "<cmd>TodoTelescope<cr>", ops)
 
 --翻译
-map("n", "tt", "<cmd>TranslateW<cr>", ops)
-map("n", "tr", "<cmd>TranslateR<cr>", ops)
+map("n", "tw", "<cmd>TranslateW<cr>", ops)
+map("x", "ts",
+  function()
+    local w = vim.fn.eval('@*')
+	  vim.cmd('normal! “*y')
+    vim.cmd('TranslateX')
+    vim.cmd('let @* = ' .. w)
+  end, ops)
 
 --代码outline
 map("n", "{", "<cmd>AerialPrev<CR>", { buffer = 0 })
@@ -161,5 +171,13 @@ map("n", "<F6>", "<CMD>OverseerRunCmd<CR>")
 map("n", "<C-A-o>", require("jdtls").organize_imports)
 
 --flash.nvim跳转
-map({ "n", "x", "o" }, "s", require("flash").jump, { desc = "Flash.nvim" })
-map({ "n", "x", "o" }, "S", require("flash").treesitter, { desc = "Flash.nvim" })
+map({ "n", "x", "o" }, "f", require("flash").jump, { desc = "Flash.nvim" })
+map({ "n", "x", "o" }, "F", require("flash").treesitter, { desc = "Flash.nvim" })
+
+--fittencode
+map("n", "<A-c>", "<cmd>Fitten start_chat<CR>", ops)
+map("n", "<A-e>", "<cmd>Fitten edit_code<CR>", ops)
+map("n", "<A-b>", "<cmd>Fitten find_bugs<CR>", ops)
+
+
+map("n", "<A-m>", require('plugins.marksplus').setup, ops)
