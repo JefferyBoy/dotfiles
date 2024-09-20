@@ -1,6 +1,7 @@
 # 终端模拟器
 super + Return
-	alacritty -e zsh
+  alacritty -e nvim --cmd 'terminal zsh'
+	# alacritty -e zsh
   # terminator -e zsh
   # konsole
   # kitty
@@ -47,9 +48,12 @@ super + ctrl + m
 super + alt + p 
 #   i3lock-fancy
     bash ~/.config/rofi/applets/bin/powermenu.sh
-# 笔记本
+# neovim
 super + n
     alacritty -e nvim --cmd 'cd /media/mxlei/data/notebook/'
+# neovim终端模式，方便查看连续的命令输出，ctrl+\后ctrl+n切换到vim模式,i切换到终端模式
+super + N
+	  alacritty -e zsh
 
 
 # bspwm快捷键

@@ -9,7 +9,7 @@ autoStart() {
   # 混成器
   picom -b &
   # 随机壁纸
-  # bash /home/mxlei/bin/random-background.sh &
+  feh --bg-fill --randomize --recursive /home/mxlei/Pictures/bing_wallpapers/ &
   # 消息通知
   dunst &
   # utools
@@ -20,6 +20,7 @@ autoStart() {
   # dingtalk &
   # 微信
   # wine "/home/mxlei/.wine/drive_c/Program Files (x85)/Tencent/WeChat/WeChat.exe" &
+  /home/mxlei/bin/PicGo-2.4.0.AppImage &
 }
 
 # 针对不同的电脑环境进行配置，如多显示器
