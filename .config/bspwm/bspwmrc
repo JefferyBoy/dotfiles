@@ -7,7 +7,7 @@ autoStart() {
   # 输入法
   fcitx5 &
   # 混成器
-  picom -b &
+  picom -b --experimental-backends &
   # 随机壁纸
   feh --bg-fill --randomize --recursive /home/mxlei/Pictures/bing_wallpapers/ &
   # 消息通知
@@ -15,7 +15,7 @@ autoStart() {
   # utools
   utools &
   # 邮箱
-  mailspring --password-store="gnome-libsecret" &
+  # mailspring --password-store="gnome-libsecret" &
   # 钉钉
   # dingtalk &
   # 微信
@@ -130,7 +130,7 @@ configBspwm() {
   bspc rule -a Screenkey manage=off
   bspc rule -a Gimp desktop='^5' state=floating follow=on
   bspc rule -a tim.exe state=tiled desktop='^3'
-  bspc rule -a wechat state=tiled desktop=^3
+  #bspc rule -a wechat state=tiled desktop=^3
   bspc rule -a com.alibabainc.dingtalk state=floating
   # bspc rule -a jetbrains-studio desktop='^3'
   bspc rule -a mailspring desktop='^4'
