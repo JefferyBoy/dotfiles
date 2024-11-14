@@ -12,7 +12,7 @@ mp.add_key_binding(")", "mark_end", function()
     mp.msg.info("End time marked: " .. end_time)
 end)
 
-mp.add_key_binding("Ctrl+S", "save_clip", function()
+mp.add_key_binding("Ctrl+D", "save_clip", function()
     if start_time and end_time then
         local input_file = mp.get_property("path")
         local output_file = "clip_" .. start_time .. "_" .. end_time .. ".mp4"

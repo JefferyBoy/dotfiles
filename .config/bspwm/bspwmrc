@@ -7,7 +7,7 @@ autoStart() {
   # 输入法
   fcitx5 &
   # 混成器
-  picom -b &
+  picom -b --experimental-backends &
   # 随机壁纸
   feh --bg-fill --randomize --recursive /home/mxlei/Pictures/bing_wallpapers/ &
   # 消息通知
@@ -15,12 +15,17 @@ autoStart() {
   # utools
   utools &
   # 邮箱
-  mailspring --password-store="gnome-libsecret" &
+  # mailspring --password-store="gnome-libsecret" &
   # 钉钉
   # dingtalk &
   # 微信
   # wine "/home/mxlei/.wine/drive_c/Program Files (x85)/Tencent/WeChat/WeChat.exe" &
+  # 图床工具
   /home/mxlei/bin/PicGo-2.4.0.AppImage &
+  # 蓝牙
+  blueman-applet &
+  # 剪贴板管理
+  copyq &
 }
 
 # 针对不同的电脑环境进行配置，如多显示器
@@ -76,9 +81,40 @@ configForEnvironment() {
     #   echo 100 >$brightness_file
     # fi
     config_success=1
-    mainMonitor="HDMI-A-0"
-    subMonitor="eDP"
-    subMonitor2="DisplayPort-0"
+-   mainMonitor="HDMI-A-0"
+-   subMonitor="eDP"
+-   subMonitor2="DisplayPort-0"
+    xrandr --output $mainMonitor --mode 2560x1440
+    xrandr --output $subMonitor2 --mode 2560x1440
+    xrandr --output $subMonitor --mode 1920x1200
+    if [ "$(xrandr | grep ' connected ' | wc -l)" -eq 3  ]; then
+      xrandr --output $mainMonitor --primary 
+      xrandr --output $subMonitor --below $mainMonitor --brightness 0.6
+      xrandr --output $subMonitor2 --left-of $mainMonitor
+      #(sleep 2; xrandr --output $subMonitor --mode 1920x1200) &
+    elif [ "$(xrandr | grep ' connected ' | wc -l)" -eq 2  ]; then 
+      xrandr --output $mainMonitor --primary 
+      xrandr --output $subMonitor --below $mainMonitor --brightness 0.6
+      #(sleep 2; xrandr --output $subMonitor --mode 1920x1200) &
+    else 
+      mainMonitor=$subMonitor
+    xrandr --output $subMonitor --mode 1920x1200
+      xrandr --output $mainMonitor --primary --brightness 0.6
+    fi
+    bspc monitor $mainMonitor -n center
+    bspc monitor center -d 1 2 3 4 5
+  fi
+  # 拯救者r9000p
+  if [ "$cpu" = " AMD Ryzen 9 7945HX with Radeon Graphics" ]; then
+    # 屏幕亮度
+    # brightness_file="/sys/class/backlight/amdgpu_bl1/brightness"
+    # if [ -f $brightness_file ]; then
+    #   echo 100 >$brightness_file
+    # fi
+    config_success=1
+    mainMonitor="HDMI-0"
+    subMonitor="DP-4"
+    subMonitor2="DP-3"
     xrandr --output $mainMonitor --mode 2560x1440
     xrandr --output $subMonitor2 --mode 2560x1440
     xrandr --output $subMonitor --mode 1920x1200
@@ -130,7 +166,7 @@ configBspwm() {
   bspc rule -a Screenkey manage=off
   bspc rule -a Gimp desktop='^5' state=floating follow=on
   bspc rule -a tim.exe state=tiled desktop='^3'
-  bspc rule -a wechat state=tiled desktop=^3
+  #bspc rule -a wechat state=tiled desktop=^3
   bspc rule -a com.alibabainc.dingtalk state=floating
   # bspc rule -a jetbrains-studio desktop='^3'
   bspc rule -a mailspring desktop='^4'
@@ -150,9 +186,14 @@ configBspwm() {
   bspc rule -a Utools state=floating
   # 飞书投屏
   bspc rule -a Metting state=floating
+  # qv2ray代理
   bspc rule -a qv2ray state=floating
   # 提示框
   bspc rule -a zenity state=floating
+  # 蓝牙管理
+  bspc rule -a blueman-manager state=floating
+  # copyq剪贴板
+  bspc rule -a copyq state=floating
 }
 
 daka_notify() {

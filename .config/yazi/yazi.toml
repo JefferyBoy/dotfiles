@@ -1,0 +1,20 @@
+[manager]
+show_hidden = false
+
+[opener]
+play = [
+	{ run = 'mpv "$@"', orphan = true, for = "unix" },
+]
+edit = [
+	{ run = '$EDITOR "$@"', block = true, for = "unix" },
+]
+open = [
+	{ run = 'xdg-open "$@"', desc = "Open" },
+]
+
+[open]
+prepend_rules = [
+  { mime = "text/*", use = "edit" },
+	{ mime = "video/*", use = "play" },
+	{ name = "*.json", use = "edit" },
+]

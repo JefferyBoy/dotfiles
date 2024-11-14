@@ -2,7 +2,7 @@
 
 # Add this script to your wm startup file.
 
-DIR="$HOME/.config/polybar"
+# DIR="$HOME/.config/polybar"
 
 # Terminate already running bar instances
 killall -q polybar
@@ -11,4 +11,10 @@ killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 # Launch the bar
-polybar -q main -c "$DIR"/config.ini &
+primaryMonitor=$(xrandr --listactivemonitors | grep "+\*" | cut -d ' ' -f 6)
+bookMonitor="DP-4"
+polybar -q main &
+if [ ! "$primaryMonitor" = "$bookMonitor" ]; then
+  sleep 2
+  polybar -q "$bookMonitor" &
+fi

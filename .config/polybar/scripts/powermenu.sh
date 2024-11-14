@@ -57,10 +57,13 @@ case $chosen in
         fi
         ;;
     $lock)
-		if [[ -f /usr/bin/i3lock-fancy ]]; then
-			i3lock-fancy
-		elif [[ -f /usr/bin/betterlockscreen ]]; then
+		if [[ -f /usr/bin/betterlockscreen ]]; then
+      # 生成图片执行：betterlockscreen -u $HOME/Pictures/bing_wallpapers/
 			betterlockscreen -l
+		elif [[ -f "$HOME/bin/i3lock-random-bg.sh" ]]; then
+			bash $HOME/bin/i3lock-random-bg.sh
+		elif [[ -f /usr/bin/i3lock-fancy ]]; then
+			i3lock-fancy
 		fi
         ;;
     $suspend)
