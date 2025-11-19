@@ -16,6 +16,8 @@
   "modules-center": ["tray"],
   "modules-right": [
     "cpu",
+    "custom/cpu_temperature",
+    "custom/cpu_freqency",
     "memory",
     "pulseaudio",
     "battery",
@@ -100,7 +102,7 @@
     "interval": 3,
     "format": "CPU {usage}%",
     "tooltip": false,
-    "on-click": "alacritty -e gotop"
+    "on-click": "alacritty -e htop"
   },
 
   "memory": {
@@ -183,9 +185,17 @@
     "on-click-right": "killall rofi"
   },
 
-  "custom/temperature": {
-    "format": "{temperature}°C",
-    "exec": "cat /sys/class/hwmon/hwmon4/temp1_input | awk '{printf \"%1.0f\", $1/1000}'",
-    "interval": 3
+  "custom/cpu_temperature": {
+    "format": "{}°C",
+    "exec": "bash $HOME/.config/waybar/scripts/cpu_temperature.sh",
+    "interval": 3,
+    "on-click": "bash ~/.config/rofi/applets/bin/system_temperature.sh"
+  },
+
+  "custom/cpu_freqency": {
+    "format": "{}",
+    "exec": "bash $HOME/.config/waybar/scripts/cpu_freqency.sh",
+    "interval": 10,
+    "on-click": "bash ~/.config/rofi/applets/bin/cpu_frequency_set.sh"
   }
 }

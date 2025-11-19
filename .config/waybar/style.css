@@ -190,7 +190,7 @@ button:hover {
   padding-right: 10px;
   transition: none;
   color: #ffffff;
-  background: linear-gradient(to right,#af5235,#8f2215)
+  background: linear-gradient(to right,#8f2215,#8f2315)
 }
 
 #battery.charging,
@@ -230,7 +230,30 @@ label:focus {
   border-bottom-left-radius: 30px;
   transition: none;
   color: #ffffff;
-  background: linear-gradient(to right, #aa739a, #f38181);
+  background: linear-gradient(to right, #aa739a, #f381a1);
+}
+
+#custom-cpu_temperature {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 0px;
+  transition: none;
+  color: #ffffff;
+  background: linear-gradient(to right, #f381a1, #f36181);
+}
+
+#custom-cpu_freqency {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 0px;
+  border-left: 1px solid #ffffff;
+  transition: none;
+  color: #ffffff;
+  background: linear-gradient(to right, #f36181, #fa742b);
 }
 
 #memory {
@@ -243,7 +266,7 @@ label:focus {
   border-left: 1px solid #ffffff;
   transition: none;
   color: #ffffff;
-  background: linear-gradient(to right,#f38181,#fa742b)
+  background: linear-gradient(to right,#fa742b, #af5235)
 }
 
 #pulseaudio {
@@ -256,7 +279,7 @@ label:focus {
   padding-right: 10px;
   transition: none;
   color: #ffffff;
-  background: linear-gradient(to right,#fa742b,#af5235)
+  background: linear-gradient(to right,#af5235, #8f2215)
 }
 
 #pulseaudio.muted {
@@ -403,3 +426,4 @@ label:focus {
 #scratchpad.empty {
   background-color: transparent;
 }
+
